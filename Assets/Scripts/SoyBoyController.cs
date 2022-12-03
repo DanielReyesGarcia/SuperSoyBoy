@@ -112,7 +112,15 @@ public class SoyBoyController : MonoBehaviour
     void FixedUpdate()
     {
         // 1
-        var acceleration = accel;
+        var acceleration = 0f;
+        if (PlayerIsOnGround())
+        {
+            acceleration = accel;
+        }
+        else
+        {
+            acceleration = airAccel;
+        }
         var xVelocity = 0f;
         // 2
         if (PlayerIsOnGround() && input.x == 0)
@@ -134,8 +142,7 @@ public class SoyBoyController : MonoBehaviour
             yVelocity = rb.velocity.y;
         }
 
-        rb.AddForce(new Vector2(((input.x * speed) - rb.velocity.x)
-        * acceleration, 0));
+        rb.AddForce(new Vector2(((input.x * speed) - rb.velocity.x) * acceleration, 0));
         // 4
         rb.velocity = new Vector2(xVelocity, yVelocity);
 
